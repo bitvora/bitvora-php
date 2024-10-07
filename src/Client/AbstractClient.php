@@ -10,6 +10,7 @@ use Bitvora\Exception\RequestException;
 use Bitvora\Http\ClientInterface;
 use Bitvora\Http\CurlClient;
 use Bitvora\Http\Response;
+use Bitvora\Enum\Network;
 
 class AbstractClient
 {
@@ -18,13 +19,13 @@ class AbstractClient
     /** @var string */
     private $baseUrl;
     /** @var string */
-    private $apiPath = '/api/v1/';
+    private $apiPath = '/v1/';
     /** @var ClientInterface */
     private $httpClient;
 
-    public function __construct(string $baseUrl, string $apiKey, ClientInterface $client = null)
+    public function __construct(Network $network, string $apiKey, ClientInterface $client = null)
     {
-        $this->baseUrl = rtrim($baseUrl, '/');
+        $this->baseUrl = rtrim($network->value, '/');
         $this->apiKey = $apiKey;
 
         // Use the $client parameter to use a custom cURL client, for example if you need to disable CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER
